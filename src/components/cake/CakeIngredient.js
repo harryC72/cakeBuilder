@@ -22,7 +22,7 @@ switch (props.type) {
     case 'topping':
         ingredient = <Topping />
         break;
-    case 'vanilla-filling':
+    case 'vanillaFilling':
         ingredient = <VanillaFilling />
         break;
     default: ingredient = null;

@@ -1,20 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classes from './Cake.module.css';
-import CakeIngredient from './CakeIngredient';
+import React from "react";
+import PropTypes from "prop-types";
+import classes from "./Cake.module.css";
+import CakeIngredient from "./CakeIngredient";
 
 const cake = props => {
-    return (
-        <div className={classes.Cake}>
-            <CakeIngredient type="top-cake" />
-            <CakeIngredient type="vanilla-filling" />
-            <CakeIngredient type="bottom-cake" />
-        </div>
-    )
-}
+  console.log("props", props);
+  let incomingIngredients = Object.keys(props.ingredients)
+    .map(ingredient => {
+      return [...Array(props.ingredients[ingredient])].map((_, i) => (
+        <CakeIngredient key={ingredient + i} type={ingredient} />
+      ));
+    })
+    .reduce((arr, el) => {
+      return arr.concat(el);
+    }, []);
 
-cake.propTypes = {
+  if (incomingIngredients.length === 0) {
+    incomingIngredients = <div>Please add topping and filling!</div>;
+  }
+  return (
+    <div className={classes.Cake}>
+      <CakeIngredient type="top-cake" />
+      {incomingIngredients}
+      <CakeIngredient type="bottom-cake" />
+    </div>
+  );
+};
 
-}
+cake.propTypes = {};
 
-export default cake
+export default cake;

@@ -1,17 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import vanillaFilling from '../../../assets/vanilla-filling.png';
+import React from "react";
+import PropTypes from "prop-types";
+import vanillaFilling from "../../../assets/vanilla-filling.png";
+import classes from "../CakeIngredient.module.css";
 
 const VanillaFilling = props => {
-    return (
-        <div>
-            <img src={vanillaFilling} alt="vanilla filling" />
-        </div>
-    )
-}
+  return (
+    <div>
+      <img
+        className={classes.General}
+        src={vanillaFilling}
+        alt="vanilla filling"
+      />
+    </div>
+  );
+};
 
-VanillaFilling.propTypes = {
+VanillaFilling.propTypes = {};
 
-}
-
-export default VanillaFilling
+export default VanillaFilling;

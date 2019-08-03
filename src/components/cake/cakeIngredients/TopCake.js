@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import topCakeImg from '../../../assets/topCake.png';
+import classes from '../CakeIngredient.module.css'
+
 
 const topCake = props => {
     return (
         <div>
-            <img src={topCakeImg} alt="top of the cake"/>
+            <img className={classes.General} src={topCakeImg} alt="top of the cake"/>
         </div>
     )
 }

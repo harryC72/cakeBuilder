@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import strawBerryImg from '../../../assets/strawberry.png';
+import classes from '../CakeIngredient.module.css'
+
 
 const strawBerry = props => {
     return (
         <div>
-            <img src={strawBerryImg} alt="strawberry" />
+            <img className={classes.General} src={strawBerryImg} alt="strawberry" />
         </div>
     )
 }
