@@ -2,8 +2,9 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import Cake from "../components/cake/Cake";
 import BuildControls from "../components/cake/BuildControls";
-import Modal from '../components/UI/Modal';
-import OrderSummary from '../components/cake/OrderSummary';
+import Modal from "../components/UI/Modal";
+import OrderSummary from "../components/cake/OrderSummary";
+import { thisTypeAnnotation } from "@babel/types";
 
 const _INGREDIENT_PRICES = {
   topping: 0.5,
@@ -20,7 +21,7 @@ export class CakeBuilder extends Component {
     },
     totalprice: 4,
     purchasable: false,
-    buying: false
+    purchased: false
   };
 
   setPurchasable = ingredients => {
@@ -35,9 +36,17 @@ export class CakeBuilder extends Component {
     }
   };
 
-  buyingHandler = () => {
-    this.setState({buying: true});
-  }
+  purchasedHandler = () => {
+    this.setState({ purchased: true });
+  };
+
+  unPurchaseHandler = () => {
+    this.setState({ purchased: false });
+  };
+
+  continuePurchaseHandler = () => {
+    alert("Continue purchase!");
+  };
 
   addIngredientHandler = type => {
     const oldCount = this.state.ingredients[type];
@@ -73,8 +82,13 @@ export class CakeBuilder extends Component {
 
     return (
       <Fragment>
-        <Modal>
-          <OrderSummary ingredients={this.state.ingredients}/>
+        <Modal show={this.state.purchased} modalClosed={this.unPurchaseHandler}>
+          <OrderSummary
+            purchasedCancel={this.unPurchaseHandler}
+            purchasedContinue={this.continuePurchaseHandler}
+            ingredients={this.state.ingredients}
+            totalPrice={this.state.totalprice}
+          />
         </Modal>
         <Cake ingredients={this.state.ingredients} />
         <BuildControls
@@ -83,7 +97,7 @@ export class CakeBuilder extends Component {
           disabled={disabledInfo}
           price={this.state.totalprice}
           disableOrderButton={this.state.purchasable}
-          ordered={this.buyingHandler}
+          ordered={this.purchasedHandler}
         />
       </Fragment>
     );

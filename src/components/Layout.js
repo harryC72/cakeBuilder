@@ -1,22 +1,17 @@
-import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
-import classes from './Layout.module.css';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import classes from "./Layout.module.css";
+import Toolbar from "./Navigation/Toolbar";
 
 const layout = props => {
-    return (
-        <Fragment>
-        <div>
-            Toolbar, SideDrawer, BackDrop
-        </div>
-        <main className={classes.Content}>
-            {props.children}
-        </main>
-        </Fragment>
-    )
-}
+  return (
+    <Fragment>
+      <Toolbar />
+      <main className={classes.Content}>{props.children}</main>
+    </Fragment>
+  );
+};
 
-layout.propTypes = {
+layout.propTypes = {};
 
-}
-
-export default layout
+export default layout;
