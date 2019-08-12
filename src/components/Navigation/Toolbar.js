@@ -3,12 +3,12 @@ import classes from "./Toolbar.module.css";
 import Logo from "../Logo";
 import NavigationItems from "./NavigationItems";
 
-const Toolbar = ({}) => {
+const Toolbar = () => {
   return (
     <header className={classes.Toolbar}>
       <div>MENU</div>
-      <Logo />
-      <nav>
+      <Logo height="80%" />
+      <nav className={classes.DeskTopOnly}>
         <NavigationItems />
       </nav>
     </header>
