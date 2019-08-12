@@ -6,7 +6,11 @@ import classes from "./SideDrawer.module.css";
 
 const SideDrawer = props => {
 
- 
+ let attachedClasses = [ classes.SideDrawer, classes.Close ];
+
+ if(props.open){
+   attachedClasses = [classes.SideDrawer, classes.Open];
+ }
 
   return (
     <Fragment>
