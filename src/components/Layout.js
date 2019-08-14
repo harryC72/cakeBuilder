@@ -14,10 +14,16 @@ sideDrawerClosedHandler = () => {
   this.setState({showSidedrawer : false })
   }
 
+toggleSideDrawerHandler = () => {
+  this.setState((prevState) =>{
+  return {showSidedrawer: !prevState.showSidedrawer}
+  });
+}
+
   render(){
     return (
       <Fragment>
-        <Toolbar />
+        <Toolbar clicked={this.toggleSideDrawerHandler}/>
         <SideDrawer open={this.state.showSidedrawer} closed={this.sideDrawerClosedHandler} />
         <main className={classes.Content}>{this.props.children}</main>
       </Fragment>
