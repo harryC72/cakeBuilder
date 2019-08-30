@@ -1,8 +1,9 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useEffect } from "react";
 import Backdrop from "../UI/Backdrop";
 import classes from "./Modal.module.css";
 
-const Modal = props => {
+const Modal = memo(props => {
+
   return (
     <Fragment>
       <Backdrop show={props.show} clicked={props.modalClosed} />
@@ -11,6 +12,6 @@ const Modal = props => {
       </div>
     </Fragment>
   );
-};
+});
 
 export default memo(Modal);

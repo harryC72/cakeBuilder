@@ -5,6 +5,8 @@ import BuildControls from "../components/cake/BuildControls";
 import Modal from "../components/UI/Modal";
 import OrderSummary from "../components/cake/OrderSummary";
 import { thisTypeAnnotation } from "@babel/types";
+import axios from "../axios-order";
+import Spinner from "../components/UI/Spinner";
 
 const _INGREDIENT_PRICES = {
   topping: 0.5,
@@ -21,7 +23,8 @@ export class CakeBuilder extends Component {
     },
     totalprice: 4,
     purchasable: false,
-    purchased: false
+    purchasing: false,
+    loading: false
   };
 
   setPurchasable = ingredients => {
@@ -37,15 +40,43 @@ export class CakeBuilder extends Component {
   };
 
   purchasedHandler = () => {
-    this.setState({ purchased: true });
+    this.setState({ purchasing: true });
   };
 
   unPurchaseHandler = () => {
-    this.setState({ purchased: false });
+    this.setState({ purchasing: false });
   };
 
-  continuePurchaseHandler = () => {
-    alert("Continue purchase!");
+  purchaseContinueHandler = () => {
+    this.setState({ loading: true });
+    let order = {
+      ingredients: this.state.ingredients,
+      price: this.state.price,
+      customer: {
+        name: "Harry C",
+        address: {
+          street: "WildStreet 3",
+          City: "Kansas City",
+          Country: "US"
+        },
+        email: "harry@gmail.com",
+        deliveryMethod: "fastest"
+      }
+    };
+    axios
+      .post("/orders.json", order)
+      .then(response =>
+        this.setState({
+          loading: false,
+          purchasing: false
+        })
+      )
+      .catch(error =>
+        this.setState({
+          loading: false,
+          purchasing: false
+        })
+      );
   };
 
   addIngredientHandler = type => {
@@ -80,15 +111,26 @@ export class CakeBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
 
+    let orderSummary = (
+      <OrderSummary
+        purchasedCancel={this.unPurchaseHandler}
+        purchasedContinue={this.purchaseContinueHandler}
+        ingredients={this.state.ingredients}
+        totalPrice={this.state.totalprice}
+      />
+    );
+
+    if (this.state.loading) {
+      orderSummary = <Spinner />;
+    }
+
     return (
       <Fragment>
-        <Modal show={this.state.purchased} modalClosed={this.unPurchaseHandler}>
-          <OrderSummary
-            purchasedCancel={this.unPurchaseHandler}
-            purchasedContinue={this.continuePurchaseHandler}
-            ingredients={this.state.ingredients}
-            totalPrice={this.state.totalprice}
-          />
+        <Modal
+          show={this.state.purchasing}
+          modalClosed={this.unPurchaseHandler}
+        >
+          {orderSummary}
         </Modal>
         <Cake ingredients={this.state.ingredients} />
         <BuildControls
